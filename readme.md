@@ -25,7 +25,7 @@ This script allows you to convert Hugging Face's T5 models to Core ML models. Co
 
 1. Clone the repository:
 
-git clone https://github.com/your_username/repository_name.git
+git clone https://github.com/kendreaditya/neural-engine-benchmark
 
 2. Install the required dependencies using pip:
 
