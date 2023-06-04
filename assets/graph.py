@@ -58,7 +58,7 @@ ax1.scatter(x_gpt2, y_gpt2, color='green', alpha=0.5, label='GPT-2 Data Points')
 ax1.plot(x_curve, y_power_law_curve, 'r-', alpha=0.3, label='Power-law Regression', linestyle='dashed')
 
 ax1.scatter(predicted_z, z_limit_time, color='black', alpha=0.5, label=f"Predicted Neural Engine\nLimit: {round(predicted_z)} million")
-ax1.annotate(f"Predicted Neural Engine\nLimit {round(predicted_z)} million @ {z_limit}GB", (predicted_z, z_limit_time), textcoords="offset points", xytext=(10, 5), ha='center', fontsize=8, color='black')
+ax1.annotate(f"Predicted Neural Engine\nLimit {round(predicted_z)} million @ {z_limit}GB", (predicted_z, z_limit_time), textcoords="offset points", xytext=(10, 5), ha='center', fontsize=8, color='orange')
 
 # Annotating data points with labels for x vs y
 for xi, yi in zip(x_t5, y_t5):

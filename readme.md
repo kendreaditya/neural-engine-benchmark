@@ -3,7 +3,7 @@
 This script allows you to convert Hugging Face's T5/GPT-2 models to Core ML models. Core ML is a framework provided by Apple that enables deploying machine learning models on Apple devices.
 
 ## Xcode Core ML Performance Report
-![](/assets/graph.png)
+![](/assets/model-graph.png)
 
 <div style='display: grid; grid-template-columns: repeat(2, 1fr); grid-gap: 10px;'>
   <div>
