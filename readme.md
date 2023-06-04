@@ -7,16 +7,16 @@ This script allows you to convert Hugging Face's T5/GPT-2 models to Core ML mode
 
 <div style='display: grid; grid-template-columns: repeat(2, 1fr); grid-gap: 10px;'>
   <div>
-    <img src='./assets/gpt2-124m.png' alt= 'gpt2-124m'>
+    <img src='./assets/gpt2-124m.png#1' alt= 'gpt2-124m'>
   </div>
   <div>
-    <img src='./assets/gpt2-medium-355m.png' alt='gpt2-355m'>
+    <img src='./assets/gpt2-medium-355m.png#1' alt='gpt2-355m'>
   </div>
   <div>
-    <img src='./assets/t5-base-220m.png' alt='t5-220m'>
+    <img src='./assets/t5-base-220m.png#1' alt='t5-220m'>
   </div>
   <div>
-    <img src='./assets/t5-small-60m.png' alt=;t5-60m'>
+    <img src='./assets/t5-small-60m.png#1' alt=;t5-60m'>
   </div>
 </div>
 
