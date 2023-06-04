@@ -6,6 +6,8 @@ from scipy.optimize import curve_fit
 # Set macOS-inspired theme
 plt.style.use('ggplot')
 
+fig, ax1 = plt.subplots()
+
 # Given points
 x_t5 = np.array([0, 60, 220])
 y_t5 = np.array([0, 9.23, 22.23])
@@ -21,59 +23,80 @@ x = np.concatenate((x_t5, x_gpt2))
 y = np.concatenate((y_t5, y_gpt2))
 z = np.concatenate((z_t5, z_gpt2))
 
-# Power-law regression
+# Power-law regression for x vs y
 def power_law_func(x, a, b):
     return a * np.power(x, b)
 
-# Curve fitting for all data points
+# Fit the power law regression
+params, _ = curve_fit(power_law_func, z, x)
+
+# Extract the fitted parameters
+a, b = params
+
+# Predict the values for the input data
+z_limit = 2
+predicted_z = power_law_func([z_limit], a, b)[0]
+
+# Print the fitted parameters
+print("a:", a)
+print("b:", b)
+
+# Print the predicted values
+print("Predicted values:", predicted_z)
+
 power_law_coeffs, _ = curve_fit(power_law_func, x, y)
 
-# Generating data for curve
-x_curve = np.linspace(0, 500, 100)
+# Generating data for regression curve
+x_curve = np.linspace(0, predicted_z, 100)
 y_power_law_curve = power_law_func(x_curve, *power_law_coeffs)
 
-# Plotting the points and curve with transparency
-plt.plot(x_curve, y_power_law_curve, alpha=0.5, label='Power-law Regression', linestyle='dashed')
-plt.scatter(x_t5, y_t5, color='blue', alpha=0.5, label='T5 Data Points')
-plt.scatter(x_gpt2, y_gpt2, color='green', alpha=0.5, label='GPT-2 Data Points')
+z_limit_time = power_law_func([predicted_z], *power_law_coeffs)[0]
 
-# Annotating data points with labels
-for i, (xi, yi) in enumerate(zip(x_t5, y_t5)):
+# Creating the first subplot (x vs y)
+ax1.scatter(x_t5, y_t5, color='blue', alpha=0.5, label='T5 Data Points')
+ax1.scatter(x_gpt2, y_gpt2, color='green', alpha=0.5, label='GPT-2 Data Points')
+ax1.plot(x_curve, y_power_law_curve, 'r-', alpha=0.3, label='Power-law Regression', linestyle='dashed')
+
+ax1.scatter(predicted_z, z_limit_time, color='black', alpha=0.5, label=f"Predicted Neural Engine\nLimit: {round(predicted_z)} million")
+ax1.annotate(f"Predicted Neural Engine\nLimit {round(predicted_z)} million @ {z_limit}GB", (predicted_z, z_limit_time), textcoords="offset points", xytext=(10, 5), ha='center', fontsize=8, color='black')
+
+# Annotating data points with labels for x vs y
+for xi, yi in zip(x_t5, y_t5):
     if xi == 0:
         continue
-    plt.annotate(f'T5 {xi} million parms', (xi, yi), textcoords="offset points", xytext=(10,5), ha='center', fontsize=8, color='blue')
-for i, (xi, yi) in enumerate(zip(x_gpt2, y_gpt2)):
-    plt.annotate(f'GPT-2 {xi} million parms', (xi, yi), textcoords="offset points", xytext=(10,5), ha='center', fontsize=8, color='green')
+    ax1.annotate(f'T5 ({xi} million params)', (xi, yi), textcoords="offset points", xytext=(10, 5), ha='center', fontsize=8, color='blue')
+for xi, yi in zip(x_gpt2, y_gpt2):
+    ax1.annotate(f'GPT-2 ({xi} million params)', (xi, yi), textcoords="offset points", xytext=(10, 5), ha='center', fontsize=8, color='green')
 
-# Extrapolation for 11 billion parameters
-x_extrapolate = np.array([500])
-y_power_law_extrapolate = power_law_func(x_extrapolate, *power_law_coeffs)
+ax1.set_xlabel('Number of Parameters (in millions)')
+ax1.set_ylabel('Prediction Time (in ms)')
 
-# Plotting the extrapolation point with transparency
-# plt.scatter(x_extrapolate, y_power_law_extrapolate, color='blue', alpha=0.5, label='Extrapolation')
+# Set the text, axis numbers, and ticks color to white
+ax1.xaxis.label.set_color('white')
+ax1.yaxis.label.set_color('white')
+ax1.tick_params(axis='x', colors='white')
+ax1.tick_params(axis='y', colors='white')
 
-# Title and subtitle
-plt.title('Prediction Time of T5 and GPT-2 Transformer Models', color='white')
-plt.suptitle('Number of Parameters vs. Prediction Time', color='white')
-plt.xlabel('Number of Parameters (in millions)', color='white')
-plt.ylabel('Prediction Time (in ms)', color='white')
-
-# Labeling axes and adding legend
-# plt.legend()
+# Adjusting figure size and DPI
+fig = plt.gcf()
+fig.set_size_inches(7, 5)
+fig.set_dpi(150)
 
 # Setting figure background to transparent
-plt.gcf().set_facecolor('none')
+fig.patch.set_alpha(0)
 
-# Predicting parameter size based on z value for T5 and GPT-2 models
-z_predict_t5 = 2
-x_predict_t5 = (z_predict_t5 / power_law_coeffs[0]) ** (1 / power_law_coeffs[1])
-
-z_predict_gpt2 = 2
-x_predict_gpt2 = (z_predict_gpt2 / power_law_coeffs[0]) ** (1 / power_law_coeffs[1])
-
-# Printing predicted parameter size
-print(f"Predicted parameter size for T5 with z = {z_predict_t5}: {x_predict_t5} million params")
-print(f"Predicted parameter size for GPT-2 with z = {z_predict_gpt2}: {x_predict_gpt2} million params")
+# Title and subtitle
+plt.suptitle('Prediction Time and Model Parameters/Size\n', color='white')
+plt.tight_layout()
 
 # Displaying the plot
+
+ax2 = ax1.secondary_xaxis("top", functions=(lambda x: 2*(x/predicted_z), lambda x: predicted_z * (x/2)))
+ax2.set_xlabel('Model Size (in GB)')
+ax2.xaxis.label.set_color('white')
+ax2.tick_params(axis='x', colors='white')
+
+# Set the figure facecolor to transparent
+fig.patch.set_alpha(0)
+
 plt.show()
