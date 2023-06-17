@@ -1,5 +1,5 @@
 ane_transformers==0.1.1
-coremltools==6.3.0
+coremltools==7.0b1
 numpy==1.24.2
 torch==2.0.0
 transformers==4.29.2
