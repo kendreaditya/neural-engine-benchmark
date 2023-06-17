@@ -52,8 +52,8 @@ To convert a T5/GPT-2 model to a Core ML model, follow these steps:
 
 2. Run the script with the desired T5/GPT model name as the argument.
    
-   Available T5 models are: `t5-small`, `t5-base`, `t5-large`, `t5-3b`, `t5-11b`
-   Available GPT-2 models are: `gpt2`, `gpt2-medium`, `gpt2-large`, `gpt2-xl`
+   - Available T5 models are: `t5-small`, `t5-base`, `t5-large`, `t5-3b`, `t5-11b`
+   - Available GPT-2 models are: `gpt2`, `gpt2-medium`, `gpt2-large`, `gpt2-xl`
 
    For example, to convert the `t5-base` model, run:
 
