@@ -1,4 +1,6 @@
-/t5-model-performace
 *.mlmodel
 .DS_Store
-models/
+mlmodels/
+.vscode/
+neural-engine-venv/
+exporters/

@@ -23,11 +23,16 @@ This script allows you to convert Hugging Face's T5/GPT-2 models to Core ML mode
 
 ## Prerequisites
 
-- Python 3.x
-- TensorFlow 2.x
-- CoreMLTools
-- Transformers
-- FastT5
+- Python 3.10
+- ane_transformers==0.1.1
+- coremltools==6.3.0
+- numpy==1.24.2
+- tensorflow==2.12.0
+- torch==2.0.0
+- transformers==4.29.2
+- transformers-exporter
+
+`git clone https://github.com/huggingface/exporters.git && cd exporters && pip install -e .`
 
 ## Installation
 

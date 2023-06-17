@@ -1,6 +1,5 @@
 import os
 import argparse
-import tensorflow as tf
 import coremltools as ct
 from coremltools.converters.mil.frontend.tensorflow.tf_op_registry import _TF_OPS_REGISTRY
 from coremltools.converters.mil import Builder as mb
